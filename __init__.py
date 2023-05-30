@@ -1,1 +1,1 @@
-None
+print("Bom dia meo")

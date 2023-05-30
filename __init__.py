@@ -1,1 +1,1 @@
-print("Bom dia meo")
+None

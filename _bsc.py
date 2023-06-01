@@ -1,3 +1,5 @@
+# Basics (#003)
+
 from typing import List, TypeAlias, Literal, overload
 
 MiscMode: TypeAlias = Literal["aparar", "reduzir", "mmc", "mdc"]

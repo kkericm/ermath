@@ -1,3 +1,5 @@
+# Other Numbers (#002)
+
 from typing import overload
 from _alias import *
 import _bsc as b
@@ -73,67 +75,181 @@ class frac():
     
     def __add__(self, other):
         x = frac(other)
-        return frac(
+        z = frac(
             self.n + x.n,
             b.mmc(self.n, x.n),
         )
+        if z.d == 1:
+            return z.n
+        return z
     def __radd__(self, other): return self.__add__(other)
     def __iadd__(self, other): return self.__add__(other)
     
     
     def __sub__(self, other):
         x = frac(other)
-        return frac(
+        z = frac(
             self.n - x.n,
             b.mmc(self.d, x.d),
         )
+        if z.d == 1:
+            return z.n
+        return z
     def __rsub__(self, other): return -frac(self.n, self.d) + other
     def __isub__(self, other): return self.__sub__(other)
 
     
     def __mul__(self, other):
         x = frac(other)
-        return frac(
+        z = frac(
             self.n * x.n,
             self.d * x.d
         )
+        if z.d == 1:
+            return z.n
+        return z
     def __rmul__(self, other): return self.__mul__(other)
     def __imul__(self, other): return self.__mul__(other)
     
     def __truediv__(self, other):
         x = frac(other)
-        return frac(
+        z = frac(
             self.n * x.d,
             self.d * x.n
         )
+        if z.d == 1:
+            return z.n
+        return z
     def __rtruediv__(self, other):
         x = frac(other)
-        return frac(
+        z = frac(
             x.d * self.n,
             x.n * self.d
         )
+        if z.d == 1:
+            return z.n
+        return z
     def __itruediv__(self, other): return self.__truediv__(other)
     
     def __pow__(self, other):
         x = frac(other)
         if x.n < 0:
             self.invert()
-        return frac(
+        z = frac(
             self.n ** x.value,
             self.d ** x.value
         )
+        if z.d == 1:
+            return z.n
+        return z
     def __rpow__(self, other):
         x = frac(other)
         if x.n < 0:
             self.invert()
-        return frac(
+        z = frac(
             x.n ** self.value,
             x.d ** self.value
         )
+        if z.d == 1:
+            return z.n
+        return z
     def __ipow__(self, other): return self.__pow__(other)
     
     # Operadores logicos =============================
+
+pi = 3.1415926535897932
+
+class rad():
+    def __init__(self, angle):
+        self.value =  float(pi * (angle / 180))
     
+    def __str__(self):
+        if len(str(self.value).split('.')[1]) > 5:
+            return str(b.arred(self.value, 5)) + 'rad'
+        return str(self.value) + 'rad'
+
+    def __repr__(self) -> str:
+        return self.__str__()
+    
+    def __int__(self) -> str:
+        return int(self.value)
+    
+    def __float__(self):
+        return self.value
+    
+    def __len__(self):
+        return len(self.__str__())
+
+class deg():
+    def __init__(self, valor: Number):
+        self.__val__ = float(rad(valor))
+        self.__ang__ = valor
+        self.__cos0__ = None
+        self.__sin0__ = None
+        self.__tan0__ = None
+        self.__cot0__ = None
+        self.__sec0__ = None
+        self.__csc0__ = None
+        
+    @property 
+    def cos(self):
+        if self.__cos0__ == None:
+            self.__cos0__ = b.arred(self.__cos__(), 5)
+        return self.__cos0__
+    @property 
+    def sin(self):
+        if self.__sin0__ == None:
+            self.__sin0__ = b.arred(self.__sin__(), 5)
+        return self.__sin0__
+    @property 
+    def tan(self):
+        if self.__tan0__ == None:
+            self.__tan0__ = b.arred(self.__tan__(), 5)
+        return self.__tan0__
+    @property 
+    def cot(self):
+        if self.__cot0__ == None:
+            self.__cot0__ = b.arred(self.__cot__(), 5)
+        return self.__cot0__
+    @property 
+    def sec(self):
+        if self.__sec0__ == None:
+            self.__sec0__ = b.arred(self.__sec__(), 5)
+        return self.__sec0__
+    @property 
+    def csc(self):
+        if self.__csc0__ == None:
+            self.__csc0__ = b.arred(self.__csc__(), 5)
+        return self.__csc0__
+        
+    def __cos__(self):
+        return 1 - (self.value ** 2 / b.fat(2)) 
+    
+    def __sin__(self):
+        return self.value - (self.value ** 3 / b.fat(3))
+    
+    def __tan__(self):
+        return self.sin / self.cos 
+    
+    def __cot__(self):
+        return self.cos / self.sin
+    
+    def __sec__(self):
+        return 1 / self.cos 
+    
+    def __csc__(self):
+        return 1 / self.sin
+
+    def __str__(self):
+        return str(self.__ang__) + "°"
+    
+    def __repr__(self) -> str:
+        return self.__str__()
+    
+    def __float__(self):
+        return self.__val__
+
+
 
 # print(frac(1, 2) + 2)           #   3/2
 # print(2 + frac(1, 2))           #   3/2
@@ -144,15 +260,4 @@ class frac():
 # print(frac(1, 2) / 2)           #   1/4
 # print(2 / frac(1, 2))           #   1/4
 # print(frac(1, 2) ** 3)          #   1/8
-# print(3 ** frac(1, 2).value)    #   1.7320
-
-# 3/2
-# 3/2
-# -1/2
-# 1/2
-# 1/1
-# 1/1
-# 1/4
-# 1/4
-# 1/8
-# 4330127018922193/2500000000000000
+# print(float(3 ** frac(1, 2)))   #   1.7320

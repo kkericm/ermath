@@ -1,4 +1,4 @@
-# Basics (#003)
+# Basics (#004)
 
 from typing import List, overload
 from _alias import *
@@ -95,6 +95,8 @@ class Miscellaneos():
     def __call__(self, Number: float, Digits: int) -> int: ...
     @overload
     def __call__(self, Number: float) -> int: ...
+    @overload
+    def __call__(self, Number: int) -> int: ...
     
     def __call__(self, *Numbers: Number):
         if len(Numbers) == 0:
@@ -118,13 +120,13 @@ class Miscellaneos():
                         return float(x + '.' + y[:n[1]])
                 elif type(n[0]) is not float:
                     raise TypeError(
-                        f"'N1' receives 'float', and {n[0]} is {n[0].__class__.__name__}."
+                        f"'Number' receives 'float', and {n[0]} is {n[0].__class__.__name__}."
                     )
                 elif len(n) != 2:
                     match len(n):
                         case 1:
                             raise TypeError(
-                                "'N2' is empty."
+                                "'Digits' is empty."
                             )
                         case _:
                             raise TypeError(
@@ -147,7 +149,7 @@ class Miscellaneos():
                     return n[0]
                 elif not (type(n[0]) is float):
                     raise TypeError(
-                        f"'N' receives 'float', and {n[0]} is {n[0].__class__.__name__}."
+                        f"'Number' receives 'float', and {n[0]} is {n[0].__class__.__name__}."
                     )
                 else:
                     raise TypeError(
@@ -224,6 +226,44 @@ class Miscellaneos():
                 # X = -10 |  X = 40  |  X = 10  |  X = 30  |  X = 20  |  X = 10
                 # Y = 30  |  Y = 30  |  Y = 30  |  Y = 10  |  Y = 10  |  Y = 10
                 # Logo, o MDC é 10...
+            case "arred":
+                if (len(n) == 2) and (type(n[0]) is float) and (type(n[1]) is int):
+                    x, y = str(n[0]).split(".")[0], str(n[0]).split(".")[1]
+                    if len(y) > n[1]:
+                        k, _y = y[n[1]], y[:n[1]]
+                        if k == 5:
+                            if y[n[1] + 2] in ["5", "6", "7", "8", "9"]:
+                                _y = _y[:-1] + str(
+                                    int(_y[-1:]) + 1
+                                )
+                        # elif k == "6" or k == "7" or k == "8" or k == "9":
+                        elif k in ["6", "7", "8", "9"]:
+                            _y = _y[:-1] + str(
+                                int(_y[-1:]) + 1
+                            )
+                            
+                        return float('.'.join([x, _y]))
+                    else:
+                        return n[0]
+                elif type(n[0]) is not float:
+                    raise TypeError(
+                        f"'Number' receives 'float', and {n[0]} is {n[0].__class__.__name__}."
+                    )
+                elif len(n) != 2:
+                    match len(n):
+                        case 1:
+                            raise TypeError(
+                                "'Digits' is empty."
+                            )
+                        case _:
+                            raise TypeError(
+                                f"There are only 2 parameters."
+                            )
+            case "fat":
+                x = n[0]
+                for i in range(1, n[0]):
+                    x *= i
+                return x
 
 # Variaveis ==================================================
 
@@ -276,6 +316,41 @@ MDC
     
 >>> OUTPUT
     4"""
+arred = Miscellaneos("arred")
+"""---
+Arred
+=====
+---
+- Number: Recebe o número decimal que deseja arredondar.
+- Digits: Recebe um número inteiro com a quantidade de digitos depois do ponto.
+
+>>> INPUT
+    print(aparar(10.229, 2))
+    print(aparar(1.0891, 3))
+    print(aparar(12.152, 2))
+    print(aparar(52.258, 2))
+    
+>>> OUTPUT
+    10.23
+    1.089
+    12.15
+    52.26"""
+fat = Miscellaneos("fat")
+"""---
+Fat
+===
+---
+- Number: Recebe o número decimal que deseja fatorar.
+
+>>> INPUT
+    print(fat(3))
+    print(fat(5))
+    print(fat(4))
+    
+>>> OUTPUT
+    6
+    120
+    24"""
 
 soma = TheSixOperations("+")
 """---

@@ -1,6 +1,6 @@
 # Init (#002)
 
-from ._bsc import (
+from _bsc import (
     soma,
     subt,
     mult,
@@ -14,4 +14,11 @@ from ._bsc import (
     
     TheSixOperations,
     Miscellaneos
+)
+
+from _othernum import (
+    frac,
+    deg,
+    rad,
+    pi
 )

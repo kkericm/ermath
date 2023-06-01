@@ -1,11 +1,7 @@
 # Basics (#003)
 
-from typing import List, TypeAlias, Literal, overload
-
-MiscMode: TypeAlias = Literal["aparar", "reduzir", "mmc", "mdc"]
-Operate: TypeAlias = Literal["+", "-", "*", "/", "**", "*/"]
-Number: TypeAlias = (int | float)
-
+from typing import List, overload
+from _alias import *
 # Classes ==================================================
 
 class TheSixOperations():
@@ -146,7 +142,9 @@ class Miscellaneos():
                     else:
                         while s[1][-1:] == '0':
                             s[1] = s[1][:-1]
-                        return '.'.join(s)
+                        return float('.'.join(s))
+                elif type(n[0]) is int:
+                    return n[0]
                 elif not (type(n[0]) is float):
                     raise TypeError(
                         f"'N' receives 'float', and {n[0]} is {n[0].__class__.__name__}."

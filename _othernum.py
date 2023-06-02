@@ -1,8 +1,8 @@
 # Other Numbers (#003)
 
 from typing import overload
-from _alias import *
-import _bsc as b
+from _alias import Number
+from _bsc import arred, mmc, mdc, reduzir, rad, fat
 
 class frac():
     @overload
@@ -14,7 +14,7 @@ class frac():
         
     def __init__(self, Numerator: Number, Denominator: Number = None):
         if (type(Numerator) and type(Denominator) is (int or float)):
-            c = b.mdc(Numerator, Denominator)
+            c = mdc(Numerator, Denominator)
             self.n, self.d = Numerator // c, Denominator // c
         elif type(Numerator) is int:
             self.n, self.d = Numerator, 1
@@ -32,16 +32,16 @@ class frac():
         elif self.d < 0:
             self.n -= self.n
         
-        self.value = b.reduzir(self.n / self.d)
-        self.n = b.reduzir(self.n)
-        self.d = b.reduzir(self.d)
+        self.value = reduzir(self.n / self.d)
+        self.n = reduzir(self.n)
+        self.d = reduzir(self.d)
         
     # Funções internas ====================
     def convert(self, f):
         r = str(f).split(".")
         s = [int(r[0] + r[1]),
             int("1" + (len(r[1]) * "0"))] 
-        c = b.mdc(s[0], s[1])
+        c = mdc(s[0], s[1])
         return [s[0] // c, s[1] // c]
     
     def invert(self):
@@ -77,7 +77,7 @@ class frac():
         x = frac(other)
         z = frac(
             self.n + x.n,
-            b.mmc(self.n, x.n),
+            mmc(self.n, x.n),
         )
         if z.d == 1:
             return z.n
@@ -90,7 +90,7 @@ class frac():
         x = frac(other)
         z = frac(
             self.n - x.n,
-            b.mmc(self.d, x.d),
+            mmc(self.d, x.d),
         )
         if z.d == 1:
             return z.n
@@ -159,28 +159,8 @@ class frac():
 
 pi = 3.1415926535897932
 
-class rad():
-    def __init__(self, angle):
-        self.value =  float(pi * (angle / 180))
-    
-    def __str__(self):
-        if len(str(self.value).split('.')[1]) > 5:
-            return str(b.arred(self.value, 5)) + 'rad'
-        return str(self.value) + 'rad'
 
-    def __repr__(self) -> str:
-        return self.__str__()
-    
-    def __int__(self) -> str:
-        return int(self.value)
-    
-    def __float__(self):
-        return self.value
-    
-    def __len__(self):
-        return len(self.__str__())
-
-class drag():
+class deg():
     def __init__(self, valor: Number):
         self.__ang__ = valor
         self.__val__ = None
@@ -194,44 +174,44 @@ class drag():
     @property 
     def cos(self):
         if self.__cos0__ == None:
-            self.__cos0__ = b.arred(self.__cos__(), 5)
+            self.__cos0__ = arred(self.__cos__(), 5)
         return self.__cos0__
     @property 
     def sin(self):
         if self.__sin0__ == None:
-            self.__sin0__ = b.arred(self.__sin__(), 5)
+            self.__sin0__ = arred(self.__sin__(), 5)
         return self.__sin0__
     @property 
     def tan(self):
         if self.__tan0__ == None:
-            self.__tan0__ = b.arred(self.__tan__(), 5)
+            self.__tan0__ = arred(self.__tan__(), 5)
         return self.__tan0__
     @property 
     def cot(self):
         if self.__cot0__ == None:
-            self.__cot0__ = b.arred(self.__cot__(), 5)
+            self.__cot0__ = arred(self.__cot__(), 5)
         return self.__cot0__
     @property 
     def sec(self):
         if self.__sec0__ == None:
-            self.__sec0__ = b.arred(self.__sec__(), 5)
+            self.__sec0__ = arred(self.__sec__(), 5)
         return self.__sec0__
     @property 
     def csc(self):
         if self.__csc0__ == None:
-            self.__csc0__ = b.arred(self.__csc__(), 5)
+            self.__csc0__ = arred(self.__csc__(), 5)
         return self.__csc0__
     @property
     def val(self):
         if self.__val__ == None: 
-            self.__val__ = b.aparar(float(rad(self.__ang__)), 5)
+            self.__val__ = rad(self.__ang__)
         return self.__val__
-    
+
     def __cos__(self):
-        return 1 - (self.val ** 2 / b.fat(2)) 
+        return 1 - (self.val ** 2 / fat(2)) 
     
     def __sin__(self):
-        return self.val - (self.val ** 3 / b.fat(3))
+        return self.val - (self.val ** 3 / fat(3))
     
     def __tan__(self):
         return self.sin / self.cos 
@@ -252,14 +232,14 @@ class drag():
         return self.__str__()
     
     def __float__(self):
-        return b.arred(self.val, 5)
+        return arred(self.val, 5)
 
     def __int__(self):
         return self.__ang__
 
-# print(int(drag(10)))
-# print(drag(10).val)
-# print(str(drag(10)))
+# print(int(deg(10)))
+# print(deg(10).val)
+# print(str(deg(10)))
 # print(frac(1, 2) + 2)           #   3/2
 # print(2 + frac(1, 2))           #   3/2
 # print(frac(1, 2) - 2)           #  -1/2
@@ -270,3 +250,5 @@ class drag():
 # print(2 / frac(1, 2))           #   1/4
 # print(frac(1, 2) ** 3)          #   1/8
 # print(float(3 ** frac(1, 2)))   #   1.7320
+
+deg(10).sin

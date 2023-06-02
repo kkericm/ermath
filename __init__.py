@@ -1,6 +1,18 @@
 # Init (#002)
 
-from _bsc import (
+from ._alias import (
+    MiscMode,
+    TrigonometryModes,
+    Operate,
+    Number,
+    Arrest
+)
+
+from _excepts import (
+    ImpossibleRectangle
+)
+
+from ._bsc import (
     soma,
     subt,
     mult,
@@ -16,9 +28,9 @@ from _bsc import (
     Miscellaneos
 )
 
-from _othernum import (
+from ._othernum import (
     frac,
     deg,
-    rad,
-    pi
 )
+
+pi = 3.1415926535897932

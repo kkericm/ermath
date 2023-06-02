@@ -1,7 +1,8 @@
 # Basics (#004)
 
-from typing import List, overload
-from _alias import *
+from typing import Any, List, overload
+from _alias import MiscMode, Number, TrigonometryModes, Operate
+
 # Classes ==================================================
 
 class TheSixOperations():
@@ -265,6 +266,34 @@ class Miscellaneos():
                     x *= i
                 return x
 
+class Trigonometry():
+    def __init__(self, mode: TrigonometryModes):
+        self.mode = mode
+    def __call__(self, Angle: int) -> Any:
+        pi = 3.1415926535897932
+        x = Angle
+        match self.mode:
+            case "deg":
+                return (x * 180) / pi
+            case "rad":
+                return pi * (x / 180)
+            case "sin":
+                k = rad(x)
+                return arred(k - (k ** 3 / 6) + (k ** 5 / 120), 6)
+            case "cos":
+                k = rad(x)
+                return arred(1 - (k ** 2 / 2) + (k ** 4 / 24), 6)
+            case "tan":
+                return sin(rad(x)) / cos(rad(x))
+            case "cot":
+                return cos(rad(x)) / sin(rad(x))
+            case "sec":
+                return 1 / sin(rad(x))
+            case "csc":
+                return 1 / cos(rad(x))
+            
+            case "asin":
+                return deg(sec(rad(x)))
 # Variaveis ==================================================
 
 aparar = Miscellaneos("aparar")
@@ -457,3 +486,18 @@ O primeiro numero é a base, e os outros são os indices da raiz aninhada.
 >>> OUTPUT
     1.3160740129524924
     1.3160740129524924"""
+    
+rad = Trigonometry("rad")
+deg = Trigonometry("deg")
+sin = Trigonometry("sin")
+cos = Trigonometry("cos")
+tan = Trigonometry("tan")
+cot = Trigonometry("cot")
+sec = Trigonometry("sec")
+csc = Trigonometry("csc")
+
+asin = Trigonometry("asin")
+
+print(asin(0.17))
+print(asin(0.5))
+print(asin(1))

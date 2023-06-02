@@ -1,4 +1,4 @@
-# Other Numbers (#002)
+# Other Numbers (#003)
 
 from typing import overload
 from _alias import *
@@ -180,10 +180,10 @@ class rad():
     def __len__(self):
         return len(self.__str__())
 
-class deg():
+class drag():
     def __init__(self, valor: Number):
-        self.__val__ = float(rad(valor))
         self.__ang__ = valor
+        self.__val__ = None
         self.__cos0__ = None
         self.__sin0__ = None
         self.__tan0__ = None
@@ -221,12 +221,17 @@ class deg():
         if self.__csc0__ == None:
             self.__csc0__ = b.arred(self.__csc__(), 5)
         return self.__csc0__
-        
+    @property
+    def val(self):
+        if self.__val__ == None: 
+            self.__val__ = b.aparar(float(rad(self.__ang__)), 5)
+        return self.__val__
+    
     def __cos__(self):
-        return 1 - (self.value ** 2 / b.fat(2)) 
+        return 1 - (self.val ** 2 / b.fat(2)) 
     
     def __sin__(self):
-        return self.value - (self.value ** 3 / b.fat(3))
+        return self.val - (self.val ** 3 / b.fat(3))
     
     def __tan__(self):
         return self.sin / self.cos 
@@ -247,10 +252,14 @@ class deg():
         return self.__str__()
     
     def __float__(self):
-        return self.__val__
+        return b.arred(self.val, 5)
 
+    def __int__(self):
+        return self.__ang__
 
-
+# print(int(drag(10)))
+# print(drag(10).val)
+# print(str(drag(10)))
 # print(frac(1, 2) + 2)           #   3/2
 # print(2 + frac(1, 2))           #   3/2
 # print(frac(1, 2) - 2)           #  -1/2

@@ -76,15 +76,44 @@ As funções do `Miscellaneos` é como as do `TheSixOperations`, que recebem os 
 - `aparar()`: Diminui um número decimal para um tamanho expecificado
   - `Number`: O número decimal que deseja aparar.
   - `Digits`: Quantidade de digitos depois do ponto.
+```py
+from ermath import aparar
+
+aparar(10.22392, 3)     # Retorna 10.123
+```
 - `reduzir()`: Caso haja um 0 depois do ponto, a função retira, se só haver 0 ele transforma em `int`.
   - `Number`: O número decimal
+```py
+from ermath import reduzir
+
+reduzir(10.0)     # Retorna 10
+```
 - `mmc()`: Recebe numeros, e tira o MMC deles.
   - `Numbers`: Recebe os números para tirar o MMC.
+```py
+from ermath import mmc
+
+mmc(20, 30, 10)     # Retorna 60
+```
 - `mdc()`: Recebe numeros, e tira o MDC deles.
   - `Numbers`: Recebe os números para tirar o MDC.
-- `arred()`: Recebe um número para arredondar, e a quantidade de digitos finais depois da vírgula.
+```py
+from ermath import mdc
+
+mdc(20, 30, 10)     # Retorna 10
+```
+- `arred()`: Recebe um número para arredondar.
   - `Number`: Recebe o número que deseja arredondar.
   - `Digits`: Recebe a quantidade de digitos depois da vírgula.
-- `fat()`: Recebe um número, e retorna o fatorial(!) desse número.
+```py
+from ermath import arred
 
+arred(10.22392, 3)     # Retorna 10.224
+```
+- `fat()`: Recebe um número, e retorna o fatorial(!) desse número.
+```py
+from ermath import fat
+
+fat(5)     # Retorna 120
+```
 ---
